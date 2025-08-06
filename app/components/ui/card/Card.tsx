@@ -31,6 +31,8 @@ const Card = ({ pokemon }: { pokemon: Pokemon }) => {
     audio.play();
   };
 	console.log("tiposssss", pokemon);
+  // Si no hay segundo tipo, se asigna un valor por defecto
+  
 	return (
 <>
 			{isFlipped ?
@@ -51,7 +53,7 @@ const Card = ({ pokemon }: { pokemon: Pokemon }) => {
               </button>
 
 				</Contenedor>
-			:	<Contenedor pokemon={pokemon} onClick={handleClick}>
+			:	<Contenedor pokemon={pokemon} onClick={handleClick} className="relative w-64 h-80 max-w-xs mx-auto rounded-2xl border-4 border-yellow-400 shadow-xl bg-gradient-to-br from-yellow-100 via-white to-yellow-200 overflow-visible transition-transform hover:scale-105 duration-200">
         
 
 					<Fondo pokemon={pokemon}>
@@ -62,7 +64,8 @@ const Card = ({ pokemon }: { pokemon: Pokemon }) => {
               >
 							# {pokemon.id}
 						</div>
-						<div className='relative lg:h-32 flex items-center justify-center overflow-hidden rounded-t-xl'>
+            
+						<div className='relative lg:h-32 flex items-center justify-center overflow-hidden rounded-t-xl h-full w-full'>
 							{" "}
 							{/* Limitar overflow */}
 							<div
@@ -82,13 +85,13 @@ const Card = ({ pokemon }: { pokemon: Pokemon }) => {
 								/>
                 :	null}
 						</div>
-						<div className='text-center'>
 							<h3
-								className='text-base uppercase text-black drop-shadow-lg tracking-wide truncate font-thin'
+								className='text-base uppercase text-black drop-shadow-lg tracking-wide truncate font-thin border text-center'
 								title={pokemon.name}
 							>
 								{pokemon.name}
 							</h3>
+						<div className=' flex-col h-full justify-end items-end'>
 							<span className='bg-slate-300 rounded-full font-bold text-gray-700 lg:hidden'>
 								#{pokemon.id}
 							</span>
