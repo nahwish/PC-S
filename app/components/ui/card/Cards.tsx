@@ -1,30 +1,18 @@
 import { usePokemonStore } from "@/app/lib/store/usePokemonStore/usePokemonStore";
 import Card from "./Card";
 import Image from "next/image";
-import Contenedor from "../../base/card/Contenedor";
-import Fondo from "../../base/card/Fondo";
+import { loadingPokemon } from "@/app/lib/pokemon";
 
 const Cards = () => {
 	const { pokemons, estaCargando } = usePokemonStore();
 
-	if (estaCargando) {
-		return (
-			<div className='flex lg:justify-center justify-around px-2 md:px-20 lg:px-40 pt-24'>
-				<Contenedor>
-					<Fondo>
-						<Image
-							src='/cargando.gif'
-							alt='Cargando'
-							width={200}
-							height={100}
-							className='z-10 lg:max-w-full max-w-20 h-20 lg:h-auto object-contain'
-						/>
-					</Fondo>
-					<p className='text-pretty font-bold text-gray-500'>Cargando...</p>
-				</Contenedor>
-			</div>
-		);
-	}
+    if (estaCargando) {
+        return (
+            <div className='flex lg:justify-center justify-around px-2 md:px-20 lg:px-40 pt-24'>
+                <Card pokemon={loadingPokemon} />
+            </div>
+        );
+    }
 
 	return (
 		<div className='flex lg:justify-center justify-around px-2 md:px-20 lg:px-40'>

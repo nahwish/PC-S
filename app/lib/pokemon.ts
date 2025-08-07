@@ -119,6 +119,7 @@ type Sprites = {
     weight:number;
     sprites: Sprites;
     moves:unknown[]
+    width?:number
   };
 
  export const estadoInicialPokemon: Pokemon = {
@@ -186,5 +187,64 @@ type Sprites = {
     },
     moves: [],
   };
-  
-  
+
+  export 	const loadingPokemon = {
+		id: 0,
+		name: "Cargando...",
+		base_experience: 0,
+		forms: [],
+		game_indices: [],
+		held_items: [],
+		is_default: true,
+		location_area_encounters: "",
+		moves: [],
+		order: 0,
+		past_types: [],
+		species: { name: "unknown", url: "" },
+		stats: [],
+		cries: { latest: "", legacy: "" },
+		height: 0,
+		weight: 0,
+		abilities: [],
+		types: [{ slot:1,type: { name: "normal",url:"" } }],
+		sprites: {
+			back_default: "",
+			back_female: "",
+			back_shiny: "",
+			back_shiny_female: "",
+			front_default: "/cargando.gif",
+			front_female: "",
+			front_shiny: "",
+			front_shiny_female: "",
+			other: {
+				dream_world: {
+					front_default: "/cargando.gif",
+					front_female: ""
+				},
+				home: {
+					front_default: "/cargando.gif",
+					front_female: "",
+					front_shiny: "/cargando.gif",
+					front_shiny_female: ""
+				},
+				"official-artwork": {
+					front_default: "/cargando.gif",
+					front_shiny: "/cargando.gif"
+				},
+				showdown: {
+					back_default: "/cargando.gif",
+					back_female: "",
+					back_shiny: "/cargando.gif",
+					back_shiny_female: "",
+					front_default: "/cargando.gif",
+					front_female: "",
+					front_shiny: "/cargando.gif",
+					front_shiny_female: ""
+				}
+			},
+			versions: {}
+		},
+		width: 200,
+		past_abilities: [],
+		versions: {}
+	};
