@@ -6,6 +6,8 @@ interface PokemonState {
   setPokemons: (newPokemons: Pokemon[]) => void;
   estaCargando: boolean;
   setEstaCargando: (newEstacargando: boolean) => void;
+  selectedPokemon: Pokemon | null;
+  setSelectedPokemon: (pokemon: Pokemon | null) => void;
 }
 
 export const usePokemonStore = create<PokemonState>((set) => ({
@@ -13,4 +15,6 @@ export const usePokemonStore = create<PokemonState>((set) => ({
   setPokemons: (newPokemons) => set({ pokemons: newPokemons }),
   estaCargando: true,
   setEstaCargando: (newEstacargando) => set({ estaCargando: newEstacargando }),
+  selectedPokemon: null,
+  setSelectedPokemon: (pokemon) => set({ selectedPokemon: pokemon }),
 }));

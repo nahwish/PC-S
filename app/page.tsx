@@ -5,6 +5,7 @@ import { obtenerTodosLosTipos } from "./services/get/getTipos"
 import Cards from "./components/ui/card/Cards"
 import { usePokemonStore } from "./lib/store/usePokemonStore/usePokemonStore"
 import { obtenerTodosLosPokemons } from "./services/get/getPokemons"
+import { PokemonModal } from "./components/ui/modal";
 import Nav from "./components/ui/nav/Nav"
 
 export default function Home() {
@@ -16,7 +17,7 @@ export default function Home() {
   
       setPokemons(poke)
       setEstaCargando(false)
-    }, [])
+    }, [setPokemons, setEstaCargando])
   
     useEffect(() => {
       getPokemons()
@@ -33,7 +34,7 @@ export default function Home() {
 		} catch (error) {
 			console.error("Error al obtener los tipos de Pokémon:", error)
 		}
-	}, [])
+	}, [setPokemonTipo])
 
 	useEffect(() => {
 		getTiposPokemon()
@@ -48,7 +49,8 @@ export default function Home() {
         </nav>
 				{/* ✅ Mostrar las cartas */}
 				<Cards />
+				<PokemonModal />
 			</main>
 		</div>
-	)
+	);
 }
