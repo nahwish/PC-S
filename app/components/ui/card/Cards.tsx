@@ -17,7 +17,7 @@ const Cards = () => {
 	return (
 		<div className='flex justify-center px-4 md:px-20 lg:px-40'>
 			{pokemons?.length > 0 ?
-				<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mt-20'>
+				<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mt-20'>
 					{pokemons.map((poke) => (
 						<Card
 							key={poke.id}

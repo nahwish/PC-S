@@ -5,9 +5,15 @@ import Image from "next/image"
 import { usePokemonStore } from "@/app/lib/store/usePokemonStore/usePokemonStore"
 import { typeColors, typeIcons } from "@/app/lib/model/card"
 import { FaSkull, FaVolumeHigh, FaVolumeXmark } from "react-icons/fa6"
+import { useShallow } from "zustand/shallow"
 
 export const PokemonModal = () => {
-	const { selectedPokemon, setSelectedPokemon } = usePokemonStore()
+const { selectedPokemon, setSelectedPokemon } = usePokemonStore(
+  useShallow((state) => ({
+    selectedPokemon: state.selectedPokemon,
+    setSelectedPokemon: state.setSelectedPokemon,
+  }))
+)
 	const modalRef = useRef<HTMLDivElement>(null)
 	const lastFocusedElementRef = useRef<HTMLElement | null>(null)
 	const audioRef = useRef<HTMLAudioElement | null>(null)
