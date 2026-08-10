@@ -8,16 +8,16 @@ const Cards = () => {
 
     if (estaCargando) {
         return (
-            <div className='flex lg:justify-center justify-around px-2 md:px-20 lg:px-40 pt-24'>
+            <div className='flex justify-center px-4 md:px-20 lg:px-40 pt-24'>
                 <Card pokemon={loadingPokemon} />
             </div>
         );
     }
 
 	return (
-		<div className='flex lg:justify-center justify-around px-2 md:px-20 lg:px-40'>
+		<div className='flex justify-center px-4 md:px-20 lg:px-40'>
 			{pokemons?.length > 0 ?
-				<div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-20'>
+				<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mt-20'>
 					{pokemons.map((poke) => (
 						<Card
 							key={poke.id}

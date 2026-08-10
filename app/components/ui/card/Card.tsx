@@ -1,3 +1,4 @@
+import { usePokemonStore } from "@/app/lib/store/usePokemonStore/usePokemonStore";
 import {
 	typeColors,
 	typeGradientColors,
@@ -12,18 +13,29 @@ import { obtenerTipo } from "@/app/lib/utils/obtenerTipo";
 
 const Card = ({ pokemon }: { pokemon: Pokemon }) => {
 	const { primerTipo } = obtenerTipo(pokemon);
+	const { setSelectedPokemon } = usePokemonStore();
 
 	const imagenDefault =
 		pokemon.sprites.other["official-artwork"].front_default ||
 		pokemon.sprites.other.showdown.front_default ||
 		"";
 
-	const handleClick = () => {};
+	const handleClick = () => {
+		setSelectedPokemon(pokemon);
+	};
+
+	const handleKeyDown = (e: React.KeyboardEvent) => {
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			handleClick();
+		}
+	};
 
 	return (
 		<Contenedor
 			pokemon={pokemon}
 			onClick={handleClick}
+			onKeyDown={handleKeyDown}
 			className='relative w-56 h-72 max-w-xs mx-auto rounded-2xl border-4 border-yellow-400 shadow-2xl bg-gradient-to-br from-yellow-100 via-white to-yellow-200 overflow-visible transition-transform hover:scale-105 duration-200'
 		>
 			<Fondo pokemon={pokemon}>
