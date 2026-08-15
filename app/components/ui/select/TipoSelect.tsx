@@ -16,7 +16,7 @@ const TipoSelect = ({
 	label = "Seleccionar tipo",
 	id = "tipoSelect",
 	options,
-	value = 0,
+	value,
 	onChange,
 	className = "",
 }: TipoSelectProps) => {
@@ -34,7 +34,7 @@ const TipoSelect = ({
 			<select
 				id={id}
 				name='tipo'
-				value={value}
+				{...(value !== undefined ? { value } : { defaultValue: 0 })}
 				onChange={(e) => onChange?.(Number(e.target.value))}
 				className={selectClassName}
 				aria-label={label}
