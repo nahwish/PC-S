@@ -1,66 +1,77 @@
-import { Pokemon, useTipoStore } from "@/app/lib/index"
+import { useTipoStore } from "@/app/lib/index"
 import { usePokemonStore } from "@/app/lib/store/usePokemonStore/usePokemonStore"
 import { obtenerTodosLosPokemons } from "@/app/services/get/getPokemons"
 import { obtenerListaPokemonsPorTipo } from "@/app/services/get/getTipos"
-import { useCallback, useEffect } from "react"
+import { useCallback } from "react"
+import TipoSelect from "@/app/components/ui/select/TipoSelect"
+import SearchPokemon from "@/app/components/ui/search/SearchPokemon"
+import { obtenerPokemonPorNombre } from "@/app/services/get/getPorNombre"
 
 const Nav = () => {
 	const { setPokemons, setEstaCargando } = usePokemonStore()
 	const { pokemonTipo } = useTipoStore()
 
-	// ✅ Obtener todos los pokemones inicialmente
 	const getPokemons = useCallback(async () => {
 		const poke = await obtenerTodosLosPokemons()
 
 		setPokemons(poke)
 		setEstaCargando(false)
-	}, [])
+	}, [setPokemons, setEstaCargando])
 
+	const obtenerTipos = useCallback(
+		async (tipo: number) => {
+			if (tipo === 0) {
+				await getPokemons()
+				return
+			}
 
-	// ✅ Filtrar pokemones por tipo
-	const obtenerTipos = async (tipo: number) => {
-		console.log("busqueda", tipo)
-		if (tipo === 0) {
-			getPokemons() // Mostrar todos si selecciona "Todos"
-			return
-		}
-		setEstaCargando(true)
-		const listaPokemonsPorTipo = await obtenerListaPokemonsPorTipo(tipo)
-		if (listaPokemonsPorTipo == null) {
-			setPokemons([])
-		} else {
-			setPokemons(listaPokemonsPorTipo)
-		}
-		console.log("Resultado", listaPokemonsPorTipo)
-		setEstaCargando(false)
-	}
+			setEstaCargando(true)
+			const listaPokemonsPorTipo = await obtenerListaPokemonsPorTipo(tipo)
+
+			if (listaPokemonsPorTipo == null) {
+				setPokemons([])
+			} else {
+				setPokemons(listaPokemonsPorTipo)
+			}
+
+			setEstaCargando(false)
+		},
+		[getPokemons, setEstaCargando, setPokemons],
+	)
+
+	const buscarPokemon = useCallback(
+		async (nombre: string) => {
+			const valor = nombre.trim()
+
+			if (!valor) {
+				setEstaCargando(true)
+				await getPokemons()
+				return
+			}
+
+			setEstaCargando(true)
+			const pokemon = await obtenerPokemonPorNombre(valor.toLowerCase())
+			if (pokemon == null) {
+				setPokemons([])
+				setEstaCargando(false)
+				return
+			}
+
+			setPokemons([pokemon])
+			setEstaCargando(false)
+		},
+		[getPokemons, setEstaCargando, setPokemons],
+	)
+
 	return (
-		<>
-			<label
-				htmlFor='tipoSelect'
-				className='block text-sm font-medium text-gray-700 self-center'
-			>
-				Seleccionar tipo
-			</label>
-
-			<select
-				id='tipoSelect'
-				name='tipo'
-				onChange={(e) => obtenerTipos(Number(e.target.value))}
-				className='w-64 p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-blue-950'
-				aria-labelledby='tipoSelect'
-			>
-				<option value={0}>Todos los tipos</option>
-				{pokemonTipo.map((tipo) => (
-					<option
-						key={tipo.id}
-						value={tipo.id}
-					>
-						{tipo.nombre}
-					</option>
-				))}
-			</select>
-		</>
+		<nav className='bg-white p-4 shadow-md flex justify-center items-center gap-4 fixed w-full z-50'>
+			<TipoSelect
+				options={pokemonTipo}
+				onChange={obtenerTipos}
+			/>
+			<SearchPokemon onSearch={buscarPokemon} />
+		</nav>
 	)
 }
+
 export default Nav

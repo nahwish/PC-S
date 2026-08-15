@@ -22,13 +22,11 @@ export const obtenerUrlListaPokemonsPorTipo = async (tipo: number) => {
 export const obtenerListaPokemonsPorTipo = async (tipo: number) => {
   if(tipo == 20) return null
   const listaPokemons = await obtenerUrlListaPokemonsPorTipo(tipo);
-  console.log('lista', listaPokemons)
   if (listaPokemons.length === 0)
     return null
   const detallesPokemons = await Promise.all(
     listaPokemons.map((pokemon: PokemonData) => obtenerDetallesPokemon(pokemon.pokemon.url))
   );
-  console.log('detalle', detallesPokemons)
   return detallesPokemons.filter((poke) => poke !== null);
 };
 

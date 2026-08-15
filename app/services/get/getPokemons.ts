@@ -15,6 +15,7 @@ export const obtenerListaPokemons = async () => {
     return [];
   }
 };
+
 export const obtenerDetallesPokemon = async (url: string) => {
   try {
     const response = await axios.get(url);
