@@ -20,7 +20,7 @@ export const obtenerUrlListaPokemonsPorTipo = async (tipo: number) => {
 };
 
 export const obtenerListaPokemonsPorTipo = async (tipo: number) => {
-  if(tipo == 20) return null
+  if (tipo === 20) return null;
   const listaPokemons = await obtenerUrlListaPokemonsPorTipo(tipo);
   if (listaPokemons.length === 0)
     return null
