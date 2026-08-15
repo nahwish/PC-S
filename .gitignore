@@ -18,3 +18,4 @@ yarn-error.log*
 # Build outputs
 build/
 dist/
+tsconfig.tsbuildinfo
