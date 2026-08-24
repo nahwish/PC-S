@@ -36,7 +36,7 @@ const Card = ({ pokemon }: { pokemon: Pokemon }) => {
 			pokemon={pokemon}
 			onClick={handleClick}
 			onKeyDown={handleKeyDown}
-			className='relative w-56 h-72 max-w-xs mx-auto rounded-2xl border-4 border-yellow-400 shadow-2xl bg-gradient-to-br from-yellow-100 via-white to-yellow-200 overflow-visible transition-transform hover:scale-105 duration-200'
+			className='relative w-56 h-72 max-w-xs mx-auto rounded-2xl border-4 border-yellow-400 shadow-2xl bg-gradient-to-br from-yellow-100 via-white to-yellow-200 overflow-visible transition-transform hover:scale-105 duration-200 pt-50'
 		>
 			<Fondo pokemon={pokemon}>
 				{/* Número */}
@@ -65,7 +65,7 @@ const Card = ({ pokemon }: { pokemon: Pokemon }) => {
 						</div>
 						: null}
 					<h3
-						className='bg-white/90 border-2 border-yellow-400 rounded-lg px-2 py-1 text-center text-xs uppercase font-extrabold text-gray-900 shadow mb-2'
+						className='bg-white/90 border-2 border-blue-400 rounded-lg px-2 py-1 text-center text-xs uppercase font-extrabold text-gray-900 shadow mb-2'
 						title={pokemon.name}
 					>
 						{pokemon.name}
