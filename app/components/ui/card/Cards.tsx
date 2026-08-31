@@ -26,7 +26,7 @@ const Cards = () => {
         <div className="flex flex-col border items-center justify-center self-center h-screen gap-3">
           <Image
             src="/empty-state-psyduck.png"
-            alt="No hay pokemons"
+            alt="No hay Pokémon"
             width={400}
             height={400}
           />
