@@ -30,9 +30,27 @@ export const obtenerTodosLosPokemons = async () => {
   const listaPokemons = await obtenerListaPokemons();
 
   const detallesPokemons = await Promise.all(
-    listaPokemons.map((pokemon : PokemonData) => obtenerDetallesPokemon(pokemon.url))
+    listaPokemons.map((pokemon: PokemonData) =>
+      obtenerDetallesPokemon(pokemon.url),
+    ),
   );
 
   return detallesPokemons.filter((poke) => poke !== null);
 };
 
+// Lista liviana (solo nombre + url) de TODOS los Pokémon disponibles en la
+// PokeAPI. Se usa para generar las rutas estáticas por Pokémon y el sitemap,
+// donde no hace falta traer los detalles completos de cada uno.
+export const obtenerListaCompletaPokemons = async (): Promise<
+  PokemonData[]
+> => {
+  try {
+    const response = await axios.get(
+      "https://pokeapi.co/api/v2/pokemon?limit=100000",
+    );
+    return response.data.results;
+  } catch (error) {
+    console.error("Error obteniendo la lista completa de Pokémon", error);
+    return [];
+  }
+};
