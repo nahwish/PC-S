@@ -1,56 +1,31 @@
-"use client"
-import { useEffect, useCallback } from "react"
-import { useTipoStore } from "@/app/lib/index"
-import { obtenerTodosLosTipos } from "./services/get/getTipos"
-import Cards from "./components/ui/card/Cards"
-import { usePokemonStore } from "./lib/store/usePokemonStore/usePokemonStore"
-import { obtenerTodosLosPokemons } from "./services/get/getPokemons"
-import { PokemonModal } from "./components/ui/modal";
-import Nav from "./components/ui/nav/Nav"
+import PokemonExplorer from "./components/PokemonExplorer";
+import { obtenerListaCompletaPokemons } from "./services/get/getPokemons";
+import { SITE_URL } from "./lib/constants";
 
-export default function Home() {
-	const { setPokemonTipo } = useTipoStore()
-    const { setPokemons, setEstaCargando } = usePokemonStore()
-    // ✅ Obtener todos los pokemones inicialmente
-    const getPokemons = useCallback(async () => {
-      const poke = await obtenerTodosLosPokemons()
-  
-      setPokemons(poke)
-      setEstaCargando(false)
-    }, [setPokemons, setEstaCargando])
-  
-    useEffect(() => {
-      getPokemons()
-    }, [getPokemons])
-	// ✅ Llamada para obtener los tipos de Pokémon (solo una vez)
-	const getTiposPokemon = useCallback(async () => {
-		try {
-			const response = await obtenerTodosLosTipos()
-			const tiposConId = response.map((tipo: any, index: number) => ({
-				id: index + 1,
-				nombre: tipo.name.charAt(0).toUpperCase() + tipo.name.slice(1),
-			}))
-			setPokemonTipo(tiposConId)
-		} catch (error) {
-			console.error("Error al obtener los tipos de Pokémon:", error)
-		}
-	}, [setPokemonTipo])
+export default async function Home() {
+  const pokemons = await obtenerListaCompletaPokemons();
 
-	useEffect(() => {
-		getTiposPokemon()
-	}, [getTiposPokemon])
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: pokemons.slice(0, 100).map((pokemon, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: pokemon.name,
+      url: `${SITE_URL}/pokemon/${pokemon.name}`,
+    })),
+  };
 
-	return (
-		<div>
-			<main>
-				{/* ✅ Select con estilos de Tailwind */}
-				<nav className='bg-white p-4 shadow-md flex justify-center gap-4 fixed w-full z-50'>
-          <Nav/>
-        </nav>
-				{/* ✅ Mostrar las cartas */}
-				<Cards />
-				<PokemonModal />
-			</main>
-		</div>
-	);
+  return (
+    <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <main>
+        <h1 className="sr-only">Pokédex — Todos los Pokémon</h1>
+        <PokemonExplorer />
+      </main>
+    </div>
+  );
 }
