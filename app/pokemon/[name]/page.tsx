@@ -6,7 +6,7 @@ import { obtenerPokemonPorNombre } from "@/app/services/get/getPorNombre";
 import { SITE_URL, SITE_NAME } from "@/app/lib/constants";
 
 interface PokemonPageProps {
-  params: Promise<{ name: string }>;
+  params: { name: string };
 }
 
 export async function generateStaticParams() {
