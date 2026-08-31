@@ -35,9 +35,7 @@ export default function PokemonExplorer() {
 
   return (
     <>
-      <nav className="bg-white p-4 shadow-md flex justify-center gap-4 fixed w-full z-50">
-        <Nav />
-      </nav>
+      <Nav />
       <Cards />
       <PokemonModal />
     </>
