@@ -6,10 +6,13 @@ export function useCargarPokemons() {
   const { setPokemons, setEstaCargando } = usePokemonStore();
 
   const cargarPokemons = useCallback(async () => {
-    const poke = await obtenerTodosLosPokemons();
-
-    setPokemons(poke);
-    setEstaCargando(false);
+    setEstaCargando(true);
+    try {
+      const poke = await obtenerTodosLosPokemons();
+      setPokemons(poke);
+    } finally {
+      setEstaCargando(false);
+    }
   }, [setPokemons, setEstaCargando]);
 
   return cargarPokemons;
